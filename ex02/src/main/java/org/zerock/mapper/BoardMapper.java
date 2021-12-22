@@ -20,8 +20,10 @@ public interface BoardMapper {
 	public BoardVO read(Long bno);
 	
 	//게시글 삭제 : 특정 게시글을 삭제하기
+	//삭제하고자하는 게시글이 있다면 1, 없으면 0 반환
 	public int delete(Long bno);
 	
 	//게시글 수정 : 특정 게시글 수정하기
+	//수정하고자하는 게시글이 있다면 1, 없으면 0 반환
 	public int update(BoardVO board);
 }

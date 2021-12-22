@@ -20,6 +20,8 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 
 <!-- 게시글 삽입 : insert 처리 후 생성된 PK값을 알아야 할 경우 -->
 <insert id="insertSelectKey">
+	<!-- @SelectKey라는 MyBatis의 어노테이션을 이용한다. 
+		미리(Before) SQL을 통해 처리해주고 특정한 이름으로 결과를 보관하는 방식 -->
 	<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 		select seq_board.nextval from dual
 	</selectKey>
