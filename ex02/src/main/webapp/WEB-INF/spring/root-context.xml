@@ -29,5 +29,6 @@
 	
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
 
-	<context:component-scan base-package="org.zerock.sample"></context:component-scan>
+	<!-- Service 작성한 클래스를 스프링의 Bean으로 인식하기 위해 아래 패키지를 스캔하도록 추가 (@Service 어노테이션으로 구분) -->
+	<context:component-scan base-package="org.zerock.service"></context:component-scan>
 </beans>
