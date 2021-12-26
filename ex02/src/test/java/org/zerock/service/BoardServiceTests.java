@@ -43,23 +43,23 @@ public class BoardServiceTests {
 	}
 	
 	@Test //service를 이용한 전체 게시글 조회 테스트
-	public void testSelectAllList() {
-		service.selectAllList().forEach(board -> log.info(board));
+	public void testgetList() {
+		service.getList().forEach(board -> log.info(board));
 	}
 	
 	@Test //service를 이용한 1개의 게시글 조회 테스트
-	public void testSelect() {
-		log.info(service.select(1L));
+	public void testget() {
+		log.info(service.get(1L));
 	}
 	
 	@Test //service를 이용한 1개의 게시글 삭제 테스트
 	public void testDelete() {
-		log.info("REMOVE RESULT : " + service.delete(34L));
+		log.info("REMOVE RESULT : " + service.remove(34L));
 	}
 	
 	@Test //service를 이용한 1개의 게시글 수정 테스트
-	public void testUpdate() {
-		BoardVO board = service.select(1L);
+	public void testModify() {
+		BoardVO board = service.get(1L);
 		
 		//게시글이 없으면 종료
 		if(board == null) {

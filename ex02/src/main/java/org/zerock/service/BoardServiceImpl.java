@@ -27,26 +27,26 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardVO select(Long bno) {
-		log.info("select... : " + bno);
-		return mapper.read(bno);
+	public BoardVO get(Long bno) {
+		log.info("get... : " + bno);
+		return mapper.get(bno);
 	}
 
 	@Override
 	public boolean modify(BoardVO board) {
 		log.info("modify...." + board);
-		return mapper.update(board) == 1; //수정이 정상적으로 이뤄지면 1 반환
+		return mapper.modify(board) == 1; //수정이 정상적으로 이뤄지면 1 반환
 	}
 
 	@Override
-	public boolean delete(Long bno) {
+	public boolean remove(Long bno) {
 		log.info("delete...." + bno);
-		return mapper.delete(bno) == 1;	//삭제가 정상적으로 이뤄지면 1 반환
+		return mapper.remove(bno) == 1;	//삭제가 정상적으로 이뤄지면 1 반환
 	}
 
 	@Override
-	public List<BoardVO> selectAllList() {
-		log.info("selectAllList...");
+	public List<BoardVO> getList() {
+		log.info("getList...");
 		
 		return mapper.getList();
 	}

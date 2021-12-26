@@ -50,7 +50,7 @@ public class BoardMapperTests {
 	@Test
 	public void testRead() {
 		//존재하는 게시글 번호로 테스트 진행 필수
-		BoardVO board = mapper.read(1L);
+		BoardVO board = mapper.get(1L);
 		
 		log.info(board);
 	}
@@ -59,7 +59,7 @@ public class BoardMapperTests {
 	public void testDelete() {
 		//존재하는 게시글 번호로 테스트 진행 필수
 		//삭제하고자하는 게시글이 있다면 1, 없으면 0 반환
-		log.info("DELETE COUNT: " + mapper.delete(22L));
+		log.info("DELETE COUNT: " + mapper.remove(22L));
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class BoardMapperTests {
 		board.setContent("수정하는 내용 테스트");
 		board.setWriter("user00");
 		
-		int count = mapper.update(board);
+		int count = mapper.modify(board);
 		log.info("UPDATE COUNT: " + count);
 	}
 

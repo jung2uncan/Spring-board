@@ -31,18 +31,18 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 </insert>
 
 <!-- 게시글 읽기 : 게시글 번호를 통해서 1개의 글 읽어오기 -->
-<select id ="read" resultType="org.zerock.domain.BoardVO">
+<select id ="get" resultType="org.zerock.domain.BoardVO">
 	select * from tbl_board where bno = #{bno}
 </select>
 
 
 <!-- 게시글 삭제 : 특정 게시글을 삭제하기 -->
-<delete id="delete">
+<delete id="remove">
 	delete from tbl_board where bno = #{bno}
 </delete>
 
 <!-- 게시글 수정 : 특정 게시글 수정하기 -->
-<update id="update">
+<update id="modify">
 	update tbl_board 
 	set title=#{title}, 
 	content=#{content}, 

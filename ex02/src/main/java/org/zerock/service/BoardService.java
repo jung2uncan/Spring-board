@@ -8,11 +8,11 @@ public interface BoardService {
 	
 	public void register(BoardVO board);
 	
-	public BoardVO select(Long bno);
+	public BoardVO get(Long bno);
 	
 	public boolean modify(BoardVO board);
 	
-	public boolean delete(Long bno);
+	public boolean remove(Long bno);
 	
-	public List<BoardVO> selectAllList();
+	public List<BoardVO> getList();
 }
