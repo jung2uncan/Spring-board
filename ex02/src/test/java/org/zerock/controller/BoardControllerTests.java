@@ -28,6 +28,7 @@ public class BoardControllerTests {
 	@Setter(onMethod_= {@Autowired})
 	private WebApplicationContext ctx;
 	
+	//가짜 MVC라고 생각하면 됨. 가짜로 URL과 파라미터 등을 브라우저에서 사용하는 것 처럼 만들어서 Contoroller를 실행해 볼 수 있음.
 	private MockMvc mockMvc;
 	
 	@Before
