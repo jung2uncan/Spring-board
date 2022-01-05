@@ -43,6 +43,12 @@ public class BoardController {
 		return "redirect:/board/list"; //'redirect:' : 스프링 MVC가 내부적으로 response.serdRedirect()를 처리함
 	}
 	
+	//글 등록을 위해 화면에서 입력을 받기 위한 메소드. 입력 페이지를 보여주는 역할만 하기 때문에 별도의 처리는 불필요함.
+	@GetMapping("/register")
+	public void register() {
+		//아무것도 설정하지 않으면, 본인의 함수명과 동일한 jsp 파일을 자동으로 호출함.
+	}
+	
 	//글 조회 메소드
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno, Model model) {
