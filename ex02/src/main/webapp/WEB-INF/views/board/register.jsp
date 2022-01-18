@@ -17,13 +17,14 @@
                         <div class="panel-heading"> Board Register </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                        <!-- form 태그를 이용하여 필요한 데이터를 전송한다. name의 속성은 BoardVO 클래스의 변수와 일치시켜줘야 한다. -->
                             <form role="form" action="/board/register" method="post">
                             	<div class="form-group">
                             		<label>Title</label> <input class="form-control" name="title">
                             	</div>
                             	
                             	<div class="form-group">
-                            		<label>Text area</label> <input class="form-control" rows="3" name="content">
+                            		<label>Text area</label> <textarea class="form-control" rows="3" name="content"></textarea>
                             	</div>
                             	
                             	<div class="form-group">

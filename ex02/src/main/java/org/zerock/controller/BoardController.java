@@ -49,11 +49,11 @@ public class BoardController {
 		//아무것도 설정하지 않으면, 본인의 함수명과 동일한 jsp 파일을 자동으로 호출함.
 	}
 	
-	//글 조회 메소드
-	@GetMapping("/get")
+	//글 조회, 수정 메소드
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
-		log.info("/get..");
-		model.addAttribute("get", service.get(bno));
+		log.info("/get or /modify..");
+		model.addAttribute("board", service.get(bno));
 	}
 	
 	//글 수정 메소드
@@ -69,7 +69,7 @@ public class BoardController {
 	}
 	
 	//글 삭제 메소드
-	@GetMapping("/remove")
+	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Model model, RedirectAttributes rttr) {
 		log.info("/remove..");
 		
@@ -79,4 +79,5 @@ public class BoardController {
 
 		return "redirect:/board/list";	
 	}
+
 }
