@@ -1,6 +1,7 @@
 package org.zerock.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -42,9 +44,16 @@ public class BoardServiceTests {
 		//log.info("생성된 게시물의 번호 : " + board.getBno());
 	}
 	
+	/*
 	@Test //service를 이용한 전체 게시글 조회 테스트
 	public void testgetList() {
 		service.getList().forEach(board -> log.info(board));
+	}
+	*/
+	
+	@Test //service를 이용한 페이지 및 읽을 게시글 개수에 따른 조회 테스트
+	public void testgetList() {
+		service.getList(new Criteria(3, 10)).forEach(board -> log.info(board));
 	}
 	
 	@Test //service를 이용한 1개의 게시글 조회 테스트

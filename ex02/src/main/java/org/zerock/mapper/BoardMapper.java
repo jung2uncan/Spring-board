@@ -3,12 +3,16 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 public interface BoardMapper {
 	
 	//게시글 전체 조회
 	//@Select("SELECT * FROM tbl_board WHERE bno > 0")
 	public List<BoardVO> getList();
+	
+	//게시글의 페이지 번호와 읽어올 개수에 따라 게시글을 조회하는 함수
+	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	//게시글 삽입 : insert 처리 후 생성된 PK값을 알 필요 없는 경우
 	public void insert(BoardVO board);
@@ -26,4 +30,5 @@ public interface BoardMapper {
 	//게시글 수정 : 특정 게시글 수정하기
 	//수정하고자하는 게시글이 있다면 1, 없으면 0 반환
 	public int modify(BoardVO board);
+	
 }
