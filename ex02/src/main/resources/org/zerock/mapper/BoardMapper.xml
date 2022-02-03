@@ -13,6 +13,7 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <!-- 게시글의 페이지 번호와 읽어올 개수에 따라 게시글을 조회하는 함수 -->
+<!-- CDATA 섹션은 XML에서 사용할 수 없는 부등호를 사용하기 위함. XML의 경우 '<,>'는 태그로 인식하는데, 이를 막기 위함이다.﻿ -->
 <select id ="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 	<![CDATA[
 		select *
