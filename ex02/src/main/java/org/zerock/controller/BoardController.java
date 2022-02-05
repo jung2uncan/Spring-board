@@ -3,6 +3,7 @@ package org.zerock.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,39 +57,48 @@ public class BoardController {
 		return "redirect:/board/list"; //'redirect:' : 스프링 MVC가 내부적으로 response.serdRedirect()를 처리함
 	}
 	
-	//글 등록을 위해 화면에서 입력을 받기 위한 메소드. 입력 페이지를 보여주는 역할만 하기 때문에 별도의 처리는 불필요함.
+	//글 등록을 위해 화면에서 입력을 받기 위한 메소드. 입력 페이지를 보여주는 역할만 하기 때문에 별도의 처리는 불필요함
 	@GetMapping("/register")
 	public void register() {
 		//아무것도 설정하지 않으면, 본인의 함수명과 동일한 jsp 파일을 자동으로 호출함.
 	}
 	
 	//글 조회, 수정 메소드
+	//@ModelAttribute : 자동으로 Model에 데이터를 지정한 이름으로 담아줌
 	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, Model model, @ModelAttribute("cri") Criteria cri) {
 		log.info("/get or /modify..");
+		
 		model.addAttribute("board", service.get(bno));
+		
 	}
 	
 	//글 수정 메소드
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, RedirectAttributes rttr, @ModelAttribute("cri") Criteria cri) {
 		log.info("modify.." + board);
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	
 	//글 삭제 메소드
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, Model model, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Model model, RedirectAttributes rttr, @ModelAttribute("cri") Criteria cri) {
 		log.info("/remove..");
 		
 		if( service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 
 		return "redirect:/board/list";	
 	}

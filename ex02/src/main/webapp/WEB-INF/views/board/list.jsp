@@ -33,7 +33,8 @@
                                 <c:forEach items="${list}" var="board">
                                 	<tr>
                                 		<td><c:out value="${board.bno}"/> </td>
-                                		<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td>
+                                		<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
+                                		<td><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td>
                                 		<td><c:out value="${board.writer}"/> </td>
                                 		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.cdate}"/> </td>
                                 		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.udate}"/> </td>
@@ -144,9 +145,17 @@
 			
 			console.log('Click');
 			
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));	//<form> 태그 내 pageNum 값은 href 속성값으로 변형하는 것
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));	//현재 선택한 번호의 href값을 가져와 pageNum값으로 세팅한다.
 			actionForm.submit();
 		});
+		
+		
+		$(".move").on("click", function(e) {
+			e.preventDefault(); //<a> 태크를 클릭해도 페이지 이동이 없도록 하는 함수
+			actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>"); //현재 선택한 태그의 href 속성에 적혀져 있는 값을 가져와 bno값으로 세팅한다.
+			actionForm.attr("action", "/board/get"); //action 값 변경
+			actionForm.submit();
+		})
 	});	
 	
 </script>
