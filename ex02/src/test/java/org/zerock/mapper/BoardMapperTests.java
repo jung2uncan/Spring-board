@@ -28,6 +28,7 @@ public class BoardMapperTests {
 	}
 	*/
 	
+	/*
 	@Test
 	public void testGetListWithPaging() {
 		Criteria cri = new Criteria();
@@ -38,6 +39,7 @@ public class BoardMapperTests {
 		
 		list.forEach(board -> log.info(board));
 	}
+	*/
 	
 	/*
 	@Test
@@ -91,5 +93,16 @@ public class BoardMapperTests {
 		log.info("UPDATE COUNT: " + count);
 	}
 	*/
+	
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("새로");
+		cri.setType("TCW");
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
+	}
 
 }

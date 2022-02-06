@@ -12,6 +12,27 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 	]]>
 </select>
 
+<!-- sql 태그는 id라는 속성을 이용해서 필요한 경우에 동일한 SQL의 일부를 재사용할 수 있다. -->
+<sql id = "criteria">
+	 <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+	  <foreach item='type' collection="typeArr">
+	  	<trim prefix="OR">
+	  		<choose>
+	  			<when test="type =='T'.toString()">
+	  				title like '%'||#{keyword}||'%'
+	  			</when>
+	  			<when test="type =='C'.toString()">
+	  				content like '%'||#{keyword}||'%'
+	  			</when>
+	  			<when test="type =='W'.toString()">
+	  				writer like '%'||#{keyword}||'%'
+	  			</when>
+	  		</choose>
+	  	</trim>
+	  </foreach>
+	 </trim>
+</sql>
+
 <!-- 게시글의 페이지 번호와 읽어올 개수에 따라 게시글을 조회하는 함수 -->
 <!-- CDATA 섹션은 XML에서 사용할 수 없는 부등호를 사용하기 위함. XML의 경우 '<,>'는 태그로 인식하는데, 이를 막기 위함이다.﻿ -->
 <select id ="getListWithPaging" resultType="org.zerock.domain.BoardVO">
@@ -21,10 +42,16 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 			(select /*+ INDEX_DESC(tbl_board pk_board) */
 			 		rownum rn, bno, title, content, writer, cdate, udate
 			 from tbl_board
-			 where rownum <= #{pageNum} * #{amount}
+			 where 
+	]]>
+	
+	<include refid="criteria"></include>
+	 
+	 <![CDATA[
+	 	rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} - 1) * #{amount}
-	]]>
+	 ]]>
 </select>
 
 <!-- 게시글 삽입 : insert 처리 후 생성된 PK값을 알 필요 없는 경우 -->
@@ -68,7 +95,11 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 
 <!-- 게시글의 전체 개수 구하기 -->
 <select id="getTotalCount" resultType="int">
-	select count(*) from tbl_board where bno > 0
+	select count(*) 
+	from tbl_board 
+	where 
+	<include refid="criteria"></include>
+	bno > 0
 </select>
 
 </mapper>

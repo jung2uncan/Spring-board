@@ -87,10 +87,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + cri.getListLink();
 	}
 	
 	//글 삭제 메소드
@@ -102,10 +106,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-
-		return "redirect:/board/list";	
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
+		
+		return "redirect:/board/list"  + cri.getListLink();	
 	}
 
 }

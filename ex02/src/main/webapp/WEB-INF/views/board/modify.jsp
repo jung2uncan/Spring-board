@@ -21,6 +21,8 @@
 
 	                        	<input type="hidden" id='pageNum' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 								<input type="hidden" id='amount' name='amount' value='<c:out value="${cri.amount }"/>'>
+								<input type="hidden" id='pageNum' name='type' value='<c:out value="${cri.type }"/>'>
+								<input type="hidden" id='amount' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 								
 	                        	<div class="form-group">
 	                           		<label>Bno</label> <input class="form-control" name="bno" value='<c:out value="${board.bno }"/>' readonly="readonly">
@@ -76,14 +78,18 @@
 				//self.location = "/board/list";   // self.location : 현재 페이지를 다른 페이지(URL)로 이동
 				formObj.attr("action", "/board/list").attr("method", "get");
 				
-				//list 페이지로 이동할 때는 모든 값이 필요없고, pageNum, amount값만 필요함
+				//list 페이지로 이동할 때는 모든 값이 필요없고, pageNum, amount, type, keyword값만 필요함
 				var pageNumTag = $("input[name='pageNum']").clone();	//pageNum값을 복사하여 pageNumTag 변수에 저장
 				var amountTag = $("input[name='amount']").clone();		//amount값을 복사하여 pageNumTag 변수에 저장
+				var typeTag = $("input[name='typeNum']").clone();		//type값을 복사하여 typeTag 변수에 저장
+				var keywordTag = $("input[name='keyword']").clone();	//keyword값을 복사하여 keywordTag 변수에 저장
 				
-				//form 태그 내 모든 내용 삭제 후, 필요 태그(pageNum, amount)만 다시 추가
+				//form 태그 내 모든 내용 삭제 후, 필요 태그(pageNum, amount, type, keyword)만 다시 추가
 				formObj.empty();
 				formObj.append(pageNumTag);
 				formObj.append(amountTag);
+				formObj.append(typeTag);
+				formObj.append(keywordTag);
 			}
 			
 			formObj.submit();

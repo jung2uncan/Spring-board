@@ -44,7 +44,55 @@
                             </table>
                             <!-- /.table-responsive -->
                             
-                             <!-- start Pagination -->
+<%--                             <!-- 수정 전 : 검색 조건 처리 부분 시작 -->
+                            <div class='row'>
+                            	<div class="col-lg-12">
+                            		<form id='searchForm' action="/board/list" method="get">
+                            			<select name='type'>
+                            				<option value="">---</option>
+                            				<option value="T">제목</option>
+                            				<option value="C">내용</option>
+                            				<option value="W">작성자</option>
+                            				<option value="TC">제목 or 내용</option>
+                            				<option value="TW">제목 or 작성자</option>
+                            				<option value="WC">내용 or 작성자</option>
+                            				<option value="TCW">제목 or 내용 or 작성자</option>
+                            			</select>
+                            			
+                            			<input type='text' name='keyword' />
+                            			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'/>
+                            			<input type='hidden' name='amount' value='${pageMaker.cri.amount}'/>
+                            			<button class='btn btn-default'>Search</button>
+                            		</form>
+                            	</div>
+                            </div>
+                            <!-- 수정 전 : 검색 조건 처리 부분 끝 --> --%>
+                            
+                            <!-- 수정 후 : 검색 조건 처리 부분 시작 -->
+                            <div class='row'>
+                            	<div class="col-lg-12">
+                            		<form id='searchForm' action="/board/list" method="get">
+                            			<select name='type'>
+                            				<option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>---</option>
+                            				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected':'' }"/>>제목</option>
+                            				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected':'' }"/>>내용</option>
+                            				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected':'' }"/>>작성자</option>
+                            				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected':'' }"/>>제목 or 내용</option>
+                            				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected':'' }"/>>제목 or 작성자</option>
+                            				<option value="WC" <c:out value="${pageMaker.cri.type eq 'WC' ? 'selected':'' }"/>>내용 or 작성자</option>
+                            				<option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW' ? 'selected':'' }"/>>제목 or 내용 or 작성자</option>
+                            			</select>
+                            			
+                            			<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+                            			<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+                            			<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+                            			<button class='btn btn-default'>Search</button>
+                            		</form>
+                            	</div>
+                            </div>
+                            <!-- 수정 후 : 검색 조건 처리 부분 끝 -->
+                            
+                            <!-- start Pagination -->
                             <div class='pull-right'>
                             	<ul class="pagination">
                             	
@@ -77,6 +125,8 @@
                             <form id='actionForm' action="/board/list" method='get'>
                             	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum}'>
                             	<input type='hidden' name='amount' value = '${pageMaker.cri.amount}'>
+                            	<input type='hidden' name='type' value = '${pageMaker.cri.type}'>
+                            	<input type='hidden' name='keyword' value = '${pageMaker.cri.keyword}'>
                             </form>
                             
 	                        <!-- Modal  추가 -->
@@ -155,7 +205,28 @@
 			actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>"); //현재 선택한 태그의 href 속성에 적혀져 있는 값을 가져와 bno값으로 세팅한다.
 			actionForm.attr("action", "/board/get"); //action 값 변경
 			actionForm.submit();
-		})
+		});
+		
+		
+		var searchForm = $("#searchForm");
+		
+		$("#searchForm button").on("click", function(e) {
+			
+			if(!searchForm.find("option:selected").val()){
+				alert("검색종류를 선택하세요");
+				return false;
+			}
+			
+			if(!searchForm.find("input[name='keyword']").val()){
+				alert("키워드를 입력하세요");
+				return false;
+			}
+			
+			searchForm.find("input[name='pageNum']").val("1");	//검색 후 페이지 번호는 1이 되도록 세팅
+			e.preventDefault();
+			
+			searchForm.submit();
+		});
 	});	
 	
 </script>
