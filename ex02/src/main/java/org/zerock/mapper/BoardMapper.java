@@ -31,4 +31,7 @@ public interface BoardMapper {
 	//수정하고자하는 게시글이 있다면 1, 없으면 0 반환
 	public int modify(BoardVO board);
 	
+	//게시글의 전체 개수 구하기
+	public int getTotalCount(Criteria cri);
+	
 }
