@@ -37,18 +37,18 @@ public class BoardController {
 	*/
 	
 	//페이지 및 읽을 게시글 개수에 따른 조회 메소드
-		@GetMapping("/list")	
-		public void list(Criteria cri, Model model) {
-			log.info("list : " + cri);
-					
-			model.addAttribute("list", service.getList(cri));
-			
-			int total = service.getTotal(cri);		
-			log.info("total : " + total);
-			
-			//model.addAttribute("pageMaker", new PageDTO(cri, 123));
-			model.addAttribute("pageMaker", new PageDTO(cri, total));
-		}
+	@GetMapping("/list")	
+	public void list(Criteria cri, Model model) {
+		log.info("list : " + cri);
+				
+		model.addAttribute("list", service.getList(cri));
+		
+		int total = service.getTotal(cri);		
+		log.info("total : " + total);
+		
+		//model.addAttribute("pageMaker", new PageDTO(cri, 123));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+	}
 		
 	//글 등록 메소드
 	@PostMapping("/register")
