@@ -81,7 +81,7 @@
 				//list 페이지로 이동할 때는 모든 값이 필요없고, pageNum, amount, type, keyword값만 필요함
 				var pageNumTag = $("input[name='pageNum']").clone();	//pageNum값을 복사하여 pageNumTag 변수에 저장
 				var amountTag = $("input[name='amount']").clone();		//amount값을 복사하여 pageNumTag 변수에 저장
-				var typeTag = $("input[name='typeNum']").clone();		//type값을 복사하여 typeTag 변수에 저장
+				var typeTag = $("input[name='type']").clone();		//type값을 복사하여 typeTag 변수에 저장
 				var keywordTag = $("input[name='keyword']").clone();	//keyword값을 복사하여 keywordTag 변수에 저장
 				
 				//form 태그 내 모든 내용 삭제 후, 필요 태그(pageNum, amount, type, keyword)만 다시 추가
