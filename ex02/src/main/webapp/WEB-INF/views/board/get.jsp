@@ -60,8 +60,26 @@
 
 <%@include file="../includes/footer.jsp" %>
 
+<script type="text/javascript" src="/resources/js/reply.js"> </script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		console.log("===============================");
+		console.log("============JS TEST============");
+		
+		var bnoValue = '<c:out value="${board.bno}"/>';
+		
+		//for replyServuce add test
+		replyService.add(
+			{reply : "JS TEST", replyer :"tester", bno:bnoValue}
+			,
+			function(result){
+				alert("RESELT : " + result);
+			}
+		);
+		
+		
 		var operForm=  $("#operForm");
 
 		$("button[data-oper='modify']").on("click", function(e) {
