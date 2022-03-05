@@ -33,7 +33,7 @@ public class SampleController {
 	}
 	
 	//http://localhost:8080/sample/getSample.json
-	//XML과 JSON 방식의 데이토를 생성할 수 있는 getSample()
+	//XML과 JSON 방식의 데이터를 생성할 수 있는 getSample()
 	@GetMapping(value="/getSample", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,
 												MediaType.APPLICATION_XML_VALUE})
 	public SampleVO getSample() {

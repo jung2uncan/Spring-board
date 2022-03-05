@@ -13,3 +13,8 @@ public class SampleVO {
 	private String firstName;
 	private String lastName;
 }
+
+/*
+ * @NoArgsConstructor : 비어 있는 생성자를 만들기 위함.
+ * @AllArgsConstructor : 모든 속성을 사용하는 생성자를 위함.
+*/
