@@ -16,7 +16,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"> Board Register </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body">                        	
                         	<div class="form-group">
                            		<label>Bno</label> <input class="form-control" name="bno" value='<c:out value="${board.bno }"/>' readonly="readonly">
                            	</div>
@@ -55,8 +55,43 @@
                     <!-- /.end panel -->
                 </div>
                 <!-- /.col-lg-12 -->
+                
+                <!-- 댓글 목록 -->
+	            <div class='row'>
+	            	<div class="col-lg-12">
+	            		
+	            		<!-- /. panel -->
+	            		<div class="panel panel-default">
+	            			<div class="panel-heading">
+	            				<i class="fa fa-comments fa-fw"></i> Reply
+	            			</div>
+	            		</div>
+	            		
+	            		<!-- ./ panel-heading -->
+	            		<div class="panel-body">
+	            			<ul class="chat">
+	            				<!-- start reply -->
+	            				<li class="left clearfix" data-rno='12'>
+	            					<div>
+		            					<div class="header">
+		            						<strong class="primary-font">user00</strong>
+		            						<small class="pull-right text-muted">2022-04-02 22:40</small>
+		            					</div>
+		            					<p> Good Job!</p>
+	            					</div>
+	            				</li>
+	            				<!-- end reply -->
+	            			</ul>
+	            			<!-- end ul -->
+	            		</div>
+	            		<!-- ./ panel .chat-panel -->
+	            	</div>
+	            </div>
+	            <!-- ./ end row -->
+	            
             </div>
             <!-- /.row -->
+            
 
 <%@include file="../includes/footer.jsp" %>
 
@@ -69,15 +104,88 @@
 		console.log("============JS TEST============");
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
+		var replyUL = $(".chat");
 		
+		showList(1);
+		
+		function showList(page) {
+			//해당 게시물의 모든 댓글을 가져오는지 확인
+			replyService.getList(
+					{bno:bnoValue, page: page || 1}, 
+					function(list){
+						var str = "";
+
+						if(list==null || list.length ==0) {
+							replyUL.html("");
+							return;
+						}
+						
+						for(var i=0, len = list.length||0; i<len; i++){
+							str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
+							str += "<div> <div class='header'> <strong class='primary-font'> " + list[i].replyer + "</strong>";
+							str += "<small class='pull-right text-muted'> " + list[i].replyDate + "</small></div>";
+							str += "<p>" + list[i].reply + "</p></div></li>";
+						}
+						
+						replyUL.html(str);
+					}
+			); //end function
+		}	//end showList
+		
+		/*
+		//해당 게시물의 모든 댓글을 가져오는지 확인
+		replyService.getList(
+				{bno:bnoValue, page:1}, 
+				function(list){
+					for(var i=0, len = list.length||0; i<len; i++){
+						console.log(list[i]);
+					}
+				}
+		);
+		*/
+
+		/*
+		//댓글 삭제 테스트
+		replyService.remove(23, 
+				function(count){
+					console.log(count);
+					if(count == "success"){
+						alert("REMOVED SUCCESS");
+					}
+				}, function(err) {
+					alert("ERROR,,,");
+				}
+		);
+		*/
+		
+		/*
+		//댓글 수정 테스트
+		replyService.modify(
+			{rno : 22, bno:bnoValue, reply : "Modify Reply...."},
+			function(result){
+				alert("댓글 수정 완료");
+			}
+		);
+		*/
+		
+		/*
+		//댓글 조회 테스트
+		replyService.get(22, 
+			function(data){
+				console.log(data + "조회 성공");
+			}
+		);
+		*/
+		
+		/*
 		//for replyServuce add test
 		replyService.add(
-			{reply : "JS TEST", replyer :"tester", bno:bnoValue}
-			,
+			{reply : "JS TEST", replyer :"tester", bno:bnoValue},
 			function(result){
 				alert("RESELT : " + result);
 			}
 		);
+		*/
 		
 		
 		var operForm=  $("#operForm");
