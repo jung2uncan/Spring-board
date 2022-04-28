@@ -151,8 +151,7 @@ var replyService = (function(){
 		remove : remove,
 		modify : modify,
 		get : get,
-		displayTime : displayTime,
-		getList : getList
+		displayTime : displayTime
 	};
 	
 })();

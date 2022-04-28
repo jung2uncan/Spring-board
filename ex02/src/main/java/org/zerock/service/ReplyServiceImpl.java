@@ -16,6 +16,11 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ReplyServiceImpl implements ReplyService{
 
+	/* 
+	 * ReplyServiceImpl은 ReplyMapper에 의존적인 관계이기 때문에 @Setter를 이용해서 처리하거나, 
+	 * 스프링 4.3의 생성자와 자동주입을 이용해서 @AllArgsConstructor으로 대체 가능하다. 
+	 */
+	
 	//@Setter(onMethod_ = @Autowired) -> @AllArgsConstructor으로 대체 가능
 	private ReplyMapper mapper;
 	
