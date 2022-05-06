@@ -264,6 +264,7 @@
 		var modalModBtn = $("#modalModBtn");	//id로 가져올 때 #
 		var modalRemoveBtn = $("#modalRemoveBtn");
 		var modalRegisterBtn = $("#modalRegisterBtn");
+		var modalCloseBtn = $("modalCloseBtn");
 		
 		//댓글 입력 버튼 눌렀을 때,
 		$("#addReplyBtn").on("click", function(e){
@@ -329,6 +330,7 @@
 					}
 				);
 		});
+		
 		
 		//댓글 페이지 번호 클릭했을 때, 새로운 댓글 가져오는 부분
 		replyPageFooter.on("click", "li a", function(e){
