@@ -78,6 +78,14 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
+		</dependency>
+		
+		<!-- AspectJ Weaver-->
+		<!-- 스프링 AOP 처리가 된 객체를 생성할 때 AspectJ Weaver라이브러리의 도움을을 받아 동작함 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
 		</dependency>	
 		
 		<!-- Logging -->

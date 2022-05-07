@@ -40,7 +40,7 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 		select *
 		from
 			(select /*+ INDEX_DESC(tbl_board pk_board) */
-			 		rownum rn, bno, title, content, writer, cdate, udate
+			 		rownum rn, bno, title, content, writer, cdate, udate, replyCnt
 			 from tbl_board
 			 where 
 	]]>
@@ -101,5 +101,11 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 	<include refid="criteria"></include>
 	bno > 0
 </select>
+
+<update id="updateReplyCnt">
+	update tbl_board 
+	set replyCnt = replyCnt + #{amount}
+	where bno = #{bno}
+</update>
 
 </mapper>

@@ -21,8 +21,8 @@ var replyService = (function(){
 			url : '/replies/new',
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
-				if(callback){
+			success : function (result, status, xhr) {
+				if(callback) {
 					callback(result);
 				}
 			},
@@ -31,9 +31,8 @@ var replyService = (function(){
 					error(er);
 				}
 			}
-		})
+		});	
 	}
-	
 		
 	function getList(param, callback, error) {
 		var bno = param.bno;

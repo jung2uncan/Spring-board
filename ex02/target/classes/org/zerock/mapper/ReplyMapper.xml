@@ -30,7 +30,7 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 댓글 수정 -->
 	<update id="update">
-		update tbl_reply set reply = #{reply}, updateDate = sysdate
+		update tbl_reply set reply = #{reply}, replyer = #{replyer}, updateDate = sysdate
 		where rno = ${rno}
 	</update>
 	

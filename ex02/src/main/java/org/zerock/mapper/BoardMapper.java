@@ -2,6 +2,7 @@ package org.zerock.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 
@@ -33,5 +34,8 @@ public interface BoardMapper {
 	
 	//게시글의 전체 개수 구하기
 	public int getTotalCount(Criteria cri);
+	
+	//게시글에 대한 댓글 수 업데이트
+	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
 }

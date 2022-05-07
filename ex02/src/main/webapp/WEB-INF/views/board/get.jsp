@@ -74,11 +74,7 @@
 	            				<!-- start reply -->
 	            				<li class="left clearfix" data-rno='12'>
 	            					<div>
-		            					<div class="header">
-		            						<strong class="primary-font">user00</strong>
-		            						<small class="pull-right text-muted">2022-04-02 22:40</small>
-		            					</div>
-		            					<p> Good Job!</p>
+	
 	            					</div>
 	            				</li>
 	            				<!-- end reply -->
@@ -142,38 +138,10 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
-		//console.log("===============================");
-		//console.log("============JS TEST============");
-		
 		var bnoValue = '<c:out value="${board.bno}"/>';
 		var replyUL = $(".chat");
 		
 		showList(1);
-		
-/* 		function showList(page) {
-			//해당 게시물의 모든 댓글을 가져오는지 확인
-			replyService.getList(
-					{bno:bnoValue, page: page || 1}, 
-					function(list){
-						var str = "";
-
-						if(list==null || list.length ==0) {
-							replyUL.html("");
-							return;
-						}
-						
-						for(var i=0, len = list.length||0; i<len; i++){
-							str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
-							str += "<div> <div class='header'> <strong class='primary-font'> " + list[i].replyer + "</strong>";
-							str += "<small class='pull-right text-muted'> " + replyService.displayTime(list[i].replyDate) + "</small></div>";
-							str += "<p>" + list[i].reply + "</p></div></li>";
-						}
-						
-						replyUL.html(str);
-					}
-			); //end function
-		}	//end showList */
 		
 		function showList(page) {
 			console.log("show list " + page);
@@ -274,11 +242,12 @@
 			
 			modalRegisterBtn.show();
 			
-			$(".modal").modal("show")		
+			$(".modal").modal("show");		
 		});
 		
  		//새로운 댓글 추가 처리 
 		modalRegisterBtn.on("click", function(e){
+		
 			var reply = {
 					reply : modalInputReply.val(),
 					replyer : modalInputReplyer.val(),
@@ -302,7 +271,8 @@
 		modalModBtn.on("click", function(e){
 			var reply = {
 					rno : modal.data("rno"),
-					reply : modalInputReply.val()
+					reply : modalInputReply.val(),
+					replyer : modalInputReplyer.val()
 			};
 			
 			replyService.modify(
@@ -334,16 +304,16 @@
 		
 		//댓글 페이지 번호 클릭했을 때, 새로운 댓글 가져오는 부분
 		replyPageFooter.on("click", "li a", function(e){
-				e.preventDefault();
-				console.log("Reply pageBtn Click");
+			e.preventDefault();
+			console.log("Reply pageBtn Click");
 				
-				var targetPageNum = $(this).attr("href");
+			var targetPageNum = $(this).attr("href");
 				
-				console.log("targetPageNum : " + targetPageNum);
+			console.log("targetPageNum : " + targetPageNum);
 				
-				pageNum = targetPageNum;
-				showList(pageNum);
-			});
+			pageNum = targetPageNum;
+			showList(pageNum);
+		});
 				
 		
 		//댓글마다 이벤트 걸기
