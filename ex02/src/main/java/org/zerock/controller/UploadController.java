@@ -1,7 +1,9 @@
 package org.zerock.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +56,16 @@ public class UploadController {
 		
 		String uploadFolder = "C:\\upload";
 		
+		// make folder ----------
+		File uploadPath = new File(uploadFolder, getFolder());	//uploadFolder 밑에 getFolder로 얻은 경로로 File 객체 생성
+		log.info("upload Path : " + uploadPath);
+		
+		
+		boolean isuploadPath = uploadPath.exists();
+		if(isuploadPath == false) {
+			uploadPath.mkdirs(); 	//make yyyy/MM/dd folder
+		}
+		
 		for(MultipartFile multipartFile : uploadFile) {
 			
 			log.info("--------------------------------------");
@@ -62,11 +74,16 @@ public class UploadController {
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
-			//IE has file path
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			log.info("only file name : " + uploadFileName);
+			// IE has File Path
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+			log.info("Only file name : " + uploadFileName);
 			
-			File saveFile = new File(uploadFolder, uploadFileName);
+			UUID uuid = UUID.randomUUID();
+			
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			
+			//File saveFile = new File(uploadFolder, uploadFileName);
+			File saveFile = new File(uploadPath, uploadFileName);
 			
 			try {
 				multipartFile.transferTo(saveFile);
@@ -75,5 +92,15 @@ public class UploadController {
 				log.error(e.getMessage());
 			}
 		}
+	}
+	
+	//오늘 날짜의 경로를 문자열로 생성하는 함수
+	private String getFolder() {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String str = sdf.format(date);	
+		
+		return str.replace("-", File.separator);
 	}
 }

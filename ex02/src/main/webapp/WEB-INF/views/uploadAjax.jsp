@@ -52,6 +52,11 @@
 			
 			//add filedate to formdata
 			for(var i=0; i < files.length; i++){
+				
+				if(!checkExtension(files[i].name, files[i].size)){
+					return false;
+				}
+				
 				formData.append("uploadFile", files[i]);
 			}
 			
@@ -60,9 +65,9 @@
 				processData: false,
 				contentType: false,
 				data: formData,
-				type: 'POST',
-				success: function(result){
-					alert("Uploaded");
+					type: 'POST',
+					success: function(result){
+						alert("Uploaded");
 				}
 			}); //$.ajax
 			
