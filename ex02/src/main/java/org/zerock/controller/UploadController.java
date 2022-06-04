@@ -128,7 +128,7 @@ public class UploadController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	//오늘 날짜의 경로를 문자열로 생성하는 함수
+	//오늘 날짜를 특정 포맷으로 구해 경로로 사용할 문자열로 생성하는 함수
 	private String getFolder() {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
