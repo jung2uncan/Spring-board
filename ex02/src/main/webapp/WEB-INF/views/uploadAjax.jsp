@@ -8,6 +8,9 @@
 </head>
 
 <body>
+	<style> 
+		<%@ include file="/WEB-INF/views/includes/uploadAjax.css" %>
+	</style>
 	
 	<h1>Upload with Ajax</h1>
 	
@@ -15,27 +18,6 @@
 		<input type='file' name='uploadFile' multiple>
 	</div>
 	
-	<style>
-		.uploadResult {
-			width: 100%;
-			background-color: gray;
-		}	
-		
-		.uploadResult ul{
-			display: flex;
-			flex-flow: row;
-			justify-content: center;
-			align-items: center;
-		}
-		
-		.uploadResult ul li {
-			list-style: none;
-			padding: 10px;
-		}
-		.uploadResult ul li img{
-			width: 20px;
-		}
-	</style>
 	<div class='uploadResult'>
 		<ul>
 			<!-- 업로드된 파일명이 추가되는 부분  -->
@@ -78,17 +60,21 @@
 			$(uploadResultArr).each(function(i, obj) {
 				
 				if(!obj.image) {	//이미지가 아니면,
-					str += "<li><img src='/resources/img/attach.png'> " + obj.fileName + "</li>";
+					str += "<li><img src='/resources/img/attach.png'>" + obj.fileName + "</li>";
 				} else {
-					str += "<li>" + obj.fileName + "</li>";
+					//str += "<li>"+ obj.fileName + "</li>";
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+					
+					console.log("fileCallPath : " + fileCallPath);
+					
+					str += "<li> <img src='/display?fileName=" + fileCallPath + "'></li>";
 				}
-				
-				//str += "<li>" + obj.fileName + "</li>";
 			})
 			
 			uploadResult.append(str);
 		}
-		
+
 		/* 
 			<input type='file'>은 다른 DOM 요소들과 다르게 readonly라 안쪽의 내용을 수정할 수 없기 때문에,
 			별도의 방법으로 초기화시켜서 또 다른 첨부파일을 추가할 수 있도록 해야한다.
