@@ -70,7 +70,7 @@
 					
 					str += "<li> <img src='/display?fileName=" + fileCallPath + "'></li>";
 				}
-			})
+			});
 			
 			uploadResult.append(str);
 		}

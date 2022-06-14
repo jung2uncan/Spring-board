@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.config.YamlProcessor.ResolutionMethod;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -152,6 +156,31 @@ public class UploadController {
 		}
 		
 		return result;
+	}
+	
+	@GetMapping(value="/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> downloadFile(String fileName){
+		log.info("download file : " + fileName);
+		
+		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		
+		log.info("resource : " + resource);
+		
+		//HttpHeaders 객체를 이용해서 다운로드 시 파일의 이름을 처리하도록 함
+		String resourceName = resource.getFilename();
+		
+		HttpHeaders headers = new HttpHeaders();
+		
+		try {
+			//Content-Disposition을 attachment로 주는 경우, 뒤에 오는 fileName과 함께 Body에 오는 값을 다운로드 받으라는 의미 
+			headers.add("Content-Disposition","attachment; fileName=" + new String(resourceName.getBytes("UTF-8"), "ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
 	//오늘 날짜를 특정 포맷으로 구해 경로로 사용할 문자열로 생성하는 함수
