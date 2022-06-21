@@ -177,6 +177,9 @@ public class UploadController {
 		//HttpHeaders 객체를 이용해서 다운로드 시 파일의 이름을 처리하도록 함
 		String resourceName = resource.getFilename();
 		
+		//remove UUID
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_")+1);
+		
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {
@@ -185,19 +188,22 @@ public class UploadController {
 			
 			if(userAgent.contains("Trident")) {
 				log.info("IE browser");
-				downloadName = URLEncoder.encode(resourceName, "UTF-8").replaceAll("\\+", " ");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+", " ");
 			} else if(userAgent.contains("Edge")) {
 				log.info("Edge browser");
-				downloadName = URLEncoder.encode(resourceName, "UTF-8");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
 				
 				log.info("Edge name : " + downloadName);
 			} else {
 				log.info("Chrome browser");
-				downloadName = new String(resourceName.getBytes("UTF-8"), "ISO-8859-1");
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
 			}
+			
+			log.info("DownloadName : " + downloadName);
 			
 			//Content-Disposition을 attachment로 주는 경우, 뒤에 오는 fileName과 함께 Body에 오는 값을 다운로드 받으라는 의미 
 			headers.add("Content-Disposition","attachment; fileName=" + downloadName);
+			
 		} catch (UnsupportedEncodingException e) {
 			// TODO: handle exception
 			e.printStackTrace();

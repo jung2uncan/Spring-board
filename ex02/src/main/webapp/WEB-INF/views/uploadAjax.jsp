@@ -8,6 +8,13 @@
 </head>
 
 <body>
+
+	<div class='bigPictureWrapper'>
+		<div class='bigPicture'>
+		
+		</div>
+	<div>
+	
 	<style> 
 		<%@ include file="/WEB-INF/views/includes/uploadAjax.css" %>
 	</style>
@@ -32,6 +39,12 @@
 	</script>
 	  
 	<script>
+	
+	//$(document).ready()의 바깥쪽에 작성함. 추후, <a> 태그에서 직접 showImage()를 호출할 수 있는 방식으로 작성하기 위함.
+	function showImage(fileCallPath) { //섬네일을 클릭하였을 때 원본 이미지 보여주는 메소드
+		alert(fileCallPath);
+	}
+	
 	$(document).ready(function(){
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -60,21 +73,34 @@
 			$(uploadResultArr).each(function(i, obj) {
 				
 				if(!obj.image) {	//이미지가 아니면,
-					str += "<li><img src='/resources/img/attach.png'>" + obj.fileName + "</li>";
-				} else {
+					
+					// 파일을 클릭하면 다운로드에 필요한 경로와 UUID가 붙은 파일 이름을 이용해서 다운로드가 가능하도록 처리하는 부분
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+				
+					console.log(fileCallPath);
+					
+					//섬네일 이미지
+					str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>";
+				} else {	//이미지가 일 때,
 					//str += "<li>"+ obj.fileName + "</li>";
 					
+					//섬네일 이미지
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+					
+					var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
+					originPath = originPath.replace(new RegExp(/\\/g), "/");
+					
 					
 					console.log("fileCallPath : " + fileCallPath);
 					
-					str += "<li> <img src='/display?fileName=" + fileCallPath + "'></li>";
+					str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a></li>";
 				}
 			});
 			
 			uploadResult.append(str);
 		}
-
+		
+		
 		/* 
 			<input type='file'>은 다른 DOM 요소들과 다르게 readonly라 안쪽의 내용을 수정할 수 없기 때문에,
 			별도의 방법으로 초기화시켜서 또 다른 첨부파일을 추가할 수 있도록 해야한다.
@@ -119,6 +145,7 @@
 			
 		});
 	});
+	
 	</script>
 	  
 </body>
