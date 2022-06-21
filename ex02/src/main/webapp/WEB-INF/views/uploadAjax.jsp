@@ -13,7 +13,7 @@
 		<div class='bigPicture'>
 		
 		</div>
-	<div>
+	</div>
 	
 	<style> 
 		<%@ include file="/WEB-INF/views/includes/uploadAjax.css" %>
