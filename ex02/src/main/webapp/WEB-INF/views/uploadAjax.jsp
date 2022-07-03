@@ -42,7 +42,22 @@
 	
 	//$(document).ready()의 바깥쪽에 작성함. 추후, <a> 태그에서 직접 showImage()를 호출할 수 있는 방식으로 작성하기 위함.
 	function showImage(fileCallPath) { //섬네일을 클릭하였을 때 원본 이미지 보여주는 메소드
-		alert(fileCallPath);
+		//alert(fileCallPath);
+	
+		$(".bigPictureWrapper").css("display","flex").show();
+		
+		//내부적으로 화면 가운데 배치하는 작업 후 <img> 태스를 추가하고, JQuery의 animate()를 이룔해서 지정된 시간동안 화면에서 열리는 효과를 처리함. 
+		$(".bigPicture")
+		.html("<img src='display?fileName=" + encodeURI(fileCallPath) + "'>")
+		.animate({width: '0%', height: '0%'}, 1000);
+		
+		//이미지를 다시 한 번 클릭하면 사라지도록 설정
+ 		$(".bigPictureWrapper").on("click", function(e) {
+			$(".bigPicture").animate({width: '0%', height: '0%'}, 1000);
+			setTimeout(() => {
+				$(this).hide();
+			}, 1000);
+		}); 
 	}
 	
 	$(document).ready(function(){
@@ -77,10 +92,18 @@
 					// 파일을 클릭하면 다운로드에 필요한 경로와 UUID가 붙은 파일 이름을 이용해서 다운로드가 가능하도록 처리하는 부분
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 				
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+					
 					console.log(fileCallPath);
 					
 					//섬네일 이미지
-					str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>";
+					//str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>";
+					
+					//섬네일 이미지
+					str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath +"\' data-type='file'> X </span>" + "<div></li>";
+							
+							
 				} else {	//이미지가 일 때,
 					//str += "<li>"+ obj.fileName + "</li>";
 					
@@ -93,7 +116,10 @@
 					
 					console.log("fileCallPath : " + fileCallPath);
 					
-					str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a></li>";
+					//str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a></li>";
+					
+					str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a>" 
+							+ "<span data-file=\'" + fileCallPath +"\' data-type='image'> X </span>" + "</li>";
 				}
 			});
 			
@@ -115,7 +141,7 @@
 			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
 			
-			console.log(files);
+			console.log("UploadAjax.jsp -> files : " + files);
 			
 			//add filedate to formdata
 			for(var i=0; i < files.length; i++){
@@ -144,6 +170,27 @@
 			}); //$.ajax
 			
 		});
+	});
+	
+	
+	// 파일 삭제 'x'표시에 대한 이벤트 처리
+	$(".uploadResult").on("click", "span", function(e) {
+		
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		
+		console.log("UploadAjax.jsp -> targetFile: " + targetFile);
+		console.log("UploadAjax.jsp -> type: " + type);
+		
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type: type},
+			dataType:'text',
+			type: 'POST',
+				success: function(result){
+					alert(result);
+				}
+		});	//$.ajax
 	});
 	
 	</script>
