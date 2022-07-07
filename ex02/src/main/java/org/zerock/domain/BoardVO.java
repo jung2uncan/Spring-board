@@ -1,6 +1,7 @@
 package org.zerock.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,4 +15,7 @@ public class BoardVO {
 	private Date udate;
 	
 	private int replyCnt;
+	
+	//게시글 등록시 한 번에 첨부파일도 처리하기 위함.
+	private List<BoardAttachVO> attachList;
 }
