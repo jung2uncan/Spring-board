@@ -106,6 +106,64 @@
 			return true;
 		}
 		
+		//업로드된 결과를 화면에 섬네일 등을 만들어서 처리하는 부분
+		function showUploadResult(uploadResultArr){
+			
+			if(!uploadResultArr || (uploadResultArr.length == 0)){
+				return;
+			}
+			
+			var uploadUL = $(".uploadResult ul");
+			var str ="";
+			
+			$(uploadResultArr).each(function(i, obj){
+				
+				//image type
+				if(obj.image){			
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+					str+= "<li><div>";
+					str+= "<span> " + obj.fileName +"</span>";
+					str+= "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str+= "<img src='/display?fileName="+fileCallPath+"'>";
+					str+= "</div></li>";
+				} else{
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+					
+					str+= "<li><div>";
+					str+= "<span> " + obj.fileName +"</span>";
+					str+= "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str+= "<img src='/resources/img/attach.png'>";
+					str+= "</div></li>";
+				}
+			});
+			
+			console.log(str);
+			uploadUL.append(str);
+		}
+		
+		$(".uploadResult").on("click", "button", function(e) {
+			
+			console.log("delete file");
+			
+			var targetFile = $(this).data("file");
+			var type = $(this).data("type");
+			
+			var targetLi = $(this).closest("li");
+			
+			$.ajax({
+				url: '/deleteFile',
+				data: {fileName: targetFile, type:type},
+				dataType: 'text',
+				type: 'POST',
+					success: function(result){
+						alert(result);
+						targetLi.remove();
+					}
+			}); //$.ajax
+		});
+		
 		$("input[type='file']").change(function(e){
 			var formData = new FormData();
 			
@@ -132,7 +190,7 @@
 				dataType: 'json',
 					success: function(result){
 						console.log(result);
-						//showUploadResult(result); //업로드 결과 처리 함수
+						showUploadResult(result); //업로드 결과 처리 함수
 					}
 			}); //$.ajax
 		});
