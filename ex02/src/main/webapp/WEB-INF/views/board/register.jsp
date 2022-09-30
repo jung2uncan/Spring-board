@@ -33,7 +33,7 @@
                             	</div>
                             	
                             	<button type="submit" class="btn btn-default">Submit Button</button>
-                            	<button typr="reset" class="btn btn-default">Reset Button</button>
+                            	<button type="reset" class="btn btn-default">Reset Button</button>
                             <form>
                             
                             <!-- /.table-responsive -->
@@ -81,11 +81,27 @@
 		
 		var formObj = $("form[role='form']");
 		
-/* 		$("button[type='submit']").on("click", function(2){
+ 		$("button[type='submit']").on("click", function(e){
 			e.preventDefault();
 			
 			console.log("submit clicked");
-		}); */
+			
+			var str = "";
+			
+			$(".uploadResult ul li").each(function(i, obj){
+				var jobj = $(obj);
+				
+				console.dir(jobj);
+				
+				//BoardVO에서 attachList라는 이름의 변수로 첨부파일의 정보를 수집하고 있음. 따라서, <input type='hidden'>의 name은 'attachList[idx]'와 같은 이름을 사용하도록 함
+				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+			});
+			
+			formObj.append(str).submit();
+		});
 		
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -121,21 +137,29 @@
 				//image type
 				if(obj.image){			
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
-					str+= "<li><div>";
-					str+= "<span> " + obj.fileName +"</span>";
-					str+= "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-					str+= "<img src='/display?fileName="+fileCallPath+"'>";
-					str+= "</div></li>";
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "'";
+					str += " ><div>";
+					str += "<span>" + obj.fileName + "</span>";
+					str += "<button type='button' data-file=\'" + fileCallPath + "\' ";
+					str += "data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/display?fileName=" + fileCallPath + "'>";
+					str += "</div>";
+					str + "</li>";
 				} else{
 					
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
 					
-					str+= "<li><div>";
-					str+= "<span> " + obj.fileName +"</span>";
-					str+= "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-					str+= "<img src='/resources/img/attach.png'>";
-					str+= "</div></li>";
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "'";
+					str += " ><div>";
+					str += "<span>" + obj.fileName + "</span>";
+					str += "<button type='button' data-file=\'" + fileCallPath + "\' ";
+					str += "data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/resources/img/attach.png'></a>";
+					str += "</div>";
+					str + "</li>";
 				}
 			});
 			
@@ -184,14 +208,14 @@
 			$.ajax({
 				url: '/uploadAjaxAction',
 				processData: false,
-				contentType: false, 
+				contentType: false,
 				data: formData,
 				type: 'POST',
 				dataType: 'json',
 					success: function(result){
 						console.log(result);
 						showUploadResult(result); //업로드 결과 처리 함수
-					}
+				}
 			}); //$.ajax
 		});
 		

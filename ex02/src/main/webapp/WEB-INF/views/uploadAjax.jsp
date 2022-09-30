@@ -46,7 +46,7 @@
 	
 		$(".bigPictureWrapper").css("display","flex").show();
 		
-		//내부적으로 화면 가운데 배치하는 작업 후 <img> 태스를 추가하고, JQuery의 animate()를 이룔해서 지정된 시간동안 화면에서 열리는 효과를 처리함. 
+		//내부적으로 화면 가운데 배치하는 작업 후 <img> 태그를 추가하고, JQuery의 animate()를 이룔해서 지정된 시간동안 화면에서 열리는 효과를 처리함. 
 		$(".bigPicture")
 		.html("<img src='display?fileName=" + encodeURI(fileCallPath) + "'>")
 		.animate({width: '0%', height: '0%'}, 1000);
@@ -82,42 +82,27 @@
 		
 		var uploadResult = $(".uploadResult ul");
 		
-		function showUploadedFile(uploadResultArr) {	//JSON 데이터를 받아서 해당 파일의 이름을 추ㅏ=가
+		function showUploadedFile(uploadResultArr) {	//JSON 데이터를 받아서 해당 파일의 이름을 추가
 			var str = "";
 			
 			$(uploadResultArr).each(function(i, obj) {
 				
-				if(!obj.image) {	//이미지가 아니면,
-					
+				if(!obj.image) {//이미지가 아니면,
 					// 파일을 클릭하면 다운로드에 필요한 경로와 UUID가 붙은 파일 이름을 이용해서 다운로드가 가능하도록 처리하는 부분
-					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
-				
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);	
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
-					
-					console.log(fileCallPath);
-					
-					//섬네일 이미지
-					//str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>";
-					
+
 					//섬네일 이미지
 					str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a>"
 							+ "<span data-file=\'" + fileCallPath +"\' data-type='file'> X </span>" + "<div></li>";
 							
 							
-				} else {	//이미지가 일 때,
-					//str += "<li>"+ obj.fileName + "</li>";
-					
+				} else {//이미지 일 때,			
 					//섬네일 이미지
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
-					
 					var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
 					originPath = originPath.replace(new RegExp(/\\/g), "/");
-					
-					
-					console.log("fileCallPath : " + fileCallPath);
-					
-					//str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a></li>";
-					
+
 					str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\"> <img src='/display?fileName=" + fileCallPath + "'></a>" 
 							+ "<span data-file=\'" + fileCallPath +"\' data-type='image'> X </span>" + "</li>";
 				}

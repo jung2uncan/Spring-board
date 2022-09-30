@@ -48,9 +48,9 @@ public class UploadController {
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
-			log.info("--------------------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
+			//log.info("--------------------------------------");
+			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			//log.info("Upload File Size: " + multipartFile.getSize());
 			
 			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
 			
@@ -82,7 +82,7 @@ public class UploadController {
 			
 			file.delete();
 			
-			log.info("type: " + type);
+			//log.info("type: " + type);
 			
 			//이미지일 경우 섬네일 아닌 사진(원본 파일)도 삭제	
 			if(type.equals("image")) {
@@ -104,7 +104,7 @@ public class UploadController {
 	@PostMapping(value="/uploadAjaxAction", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction(MultipartFile[] uploadFile) {
-		log.info("Update Ajax POST...............");
+		//log.info("Update Ajax POST...............");
 			
 		List<AttachFileDTO> list = new ArrayList<>();
 		
@@ -113,7 +113,7 @@ public class UploadController {
 		
 		// make folder ----------
 		File uploadPath = new File(uploadFolder, uploadFolderPath);	//uploadFolder 밑에 getFolder로 얻은 경로로 File 객체 생성
-		log.info("upload Path : " + uploadPath);
+		//log.info("upload Path : " + uploadPath);
 		
 		boolean isuploadPath = uploadPath.exists();
 		if(isuploadPath == false) {

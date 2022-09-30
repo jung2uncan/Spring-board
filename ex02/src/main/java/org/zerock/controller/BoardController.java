@@ -52,10 +52,15 @@ public class BoardController {
 	//글 등록 메소드
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
+		log.info("=================================");
 		log.info("register : " + board);
 		
-		service.register(board);
+		if(board.getAttachList() != null) {
+			board.getAttachList().forEach(attach -> log.info(attach));
+		}
+		log.info("=================================");
 		
+		service.register(board);
 		rttr.addFlashAttribute("result", board.getBno());
 		
 		return "redirect:/board/list"; //'redirect:' : 스프링 MVC가 내부적으로 response.serdRedirect()를 처리함
