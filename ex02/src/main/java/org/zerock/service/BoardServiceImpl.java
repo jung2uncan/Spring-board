@@ -54,9 +54,13 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.modify(board) == 1; //수정이 정상적으로 이뤄지면 1 반환
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long bno) {
 		log.info("delete...." + bno);
+		
+		attachMapper.deleteAll(bno);
+		
 		return mapper.remove(bno) == 1;	//삭제가 정상적으로 이뤄지면 1 반환
 	}
 

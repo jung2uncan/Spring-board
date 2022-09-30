@@ -18,4 +18,7 @@ PUBLIC "-//mtbatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM tbl_attach WHERE bno=#{bno}
 	</select>
 	
+	<delete id="deleteAll">
+		DELETE TBL_ATTACH WHERE bno=#{bno}
+	</delete>
 </mapper>

@@ -12,4 +12,6 @@ public interface BoardAttachMapper {
 	
 	//게시글 조회시, 게시글에 첨부된 첨부파일 조회용 메소드
 	public List<BoardAttachVO> findByBno(Long bno);
+	
+	public void deleteAll(Long bno);
 }
