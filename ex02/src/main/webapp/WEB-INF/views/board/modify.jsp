@@ -3,6 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@include file="../includes/header.jsp" %>
+<style><%@ include file="/WEB-INF/views/includes/uploadAjax.css" %></style>
+
+	<div calss='bigPictureWrapper'>
+		<div class='bigPicture'>
+		</div>
+	</div>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -59,6 +65,38 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		
+		(function(){
+			var bno = '<c:out value="${board.bno}"/>';
+			
+			$.getJSON("/board/getAttachList", {bno: bno}, function(arr){
+				console.log(arr);
+				
+				var str="";
+				
+				$(arr).each(function(i, attach) {
+					//image type
+					if(attach.fileType){
+						var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.fileName);
+						
+						str+="<li data-path='" + attach.fileName+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-typ='"+attach.fileType"'>";
+						str+="<div>";
+						str+="<img src='/display?fileName="+fileCallPath"'>";
+						str+="</div>";
+						str+="</li>";
+					} else {						
+						str+="<li data-path='" + attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-typ='"+attach.fileType"'>";
+						str+="<div>";
+						str+= "<span> "+attach.fileName+"</span><br/>";
+						str+= "<img src='/resources/img/attach.png'></a>";
+						str+="</div>";
+						str+="</li>"'
+					}
+				});
+				
+				$(".uploadResult ul").html(str);
+			});//end getJson
+		})(); // end function
 		
 		var formObj = $("form");
 		

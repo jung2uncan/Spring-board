@@ -19,7 +19,7 @@ import org.zerock.service.ReplyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RequestMapping("/replies/*")
+@RequestMapping("/replies/")
 @RestController
 @Log4j
 @AllArgsConstructor
