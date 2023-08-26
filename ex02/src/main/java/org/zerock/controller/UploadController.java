@@ -49,8 +49,8 @@ public class UploadController {
 		for(MultipartFile multipartFile : uploadFile) {
 			
 			//log.info("--------------------------------------");
-			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			//log.info("Upload File Size: " + multipartFile.getSize());
+			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			log.info("Upload File Size: " + multipartFile.getSize());
 			
 			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
 			
@@ -78,7 +78,7 @@ public class UploadController {
 		
 		try {
 			//이미지가 아닌 파일의 경우 파일 삭제, 이미지일 경우 섬네일 삭제
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("C:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
 			
 			file.delete();
 			
@@ -172,7 +172,7 @@ public class UploadController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName){	//특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
-		log.info("fileName : " + fileName);	//fileName은 파일의 경로
+		log.info("*********fileName : " + fileName);	//fileName은 파일의 경로
 		
 		File file = new File("c:\\upload\\"+fileName);
 		

@@ -19,6 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteAll">
-		DELETE TBL_ATTACH WHERE bno=#{bno}
+		DELETE tbl_attach WHERE bno=#{bno}
 	</delete>
 </mapper>

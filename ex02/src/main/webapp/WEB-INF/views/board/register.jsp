@@ -92,7 +92,7 @@
 				var jobj = $(obj);
 				
 				console.dir(jobj);
-				
+
 				//BoardVO에서 attachList라는 이름의 변수로 첨부파일의 정보를 수집하고 있음. 따라서, <input type='hidden'>의 name은 'attachList[idx]'와 같은 이름을 사용하도록 함
 				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
 				str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
@@ -135,8 +135,9 @@
 			$(uploadResultArr).each(function(i, obj){
 				
 				//image type
-				if(obj.image){			
-					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+				if(obj.image){
+					console.log(obj.uploadPath);
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "\s_" + obj.uuid + "_" + obj.fileName);
 					str += "<li data-path='" + obj.uploadPath + "'";
 					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "'";
 					str += " ><div>";

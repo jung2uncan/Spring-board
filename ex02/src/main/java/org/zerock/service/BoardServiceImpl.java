@@ -51,7 +51,20 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public boolean modify(BoardVO board) {
 		log.info("modify...." + board);
-		return mapper.modify(board) == 1; //수정이 정상적으로 이뤄지면 1 반환
+		//기존 파일 다 지우고,
+		attachMapper.deleteAll(board.getBno());
+		
+		boolean modifyResult = mapper.modify(board) == 1; //수정이 정상적으로 이뤄지면 1 반환
+		
+		if(modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0 ) {
+			//bno를 얻어 수정하는 현재 갖고 있는 파일들을 새로 저장함.
+			board.getAttachList().forEach(attach -> {
+				attach.setBno(board.getBno());
+				attachMapper.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 	}
 
 	@Transactional
